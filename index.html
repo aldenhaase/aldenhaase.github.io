@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-      <h1>Keyboard</h1>
-      <h2>Project Motivation</h2>
+      <h1>Building A Keyboard From The Ground Up</h1>
       <p>
         I for one, have faith in my thumbs; more faith than modern keyboard designs do, it seems. 
         While I was typing away one day, I looked down at my fingers hammering away, each one with
@@ -27,6 +26,31 @@
         on making a minimal footprint, multilayered keyboard, I decided to replace the "hjkl" keys 
         with the arrow keys on the second layer.
       </p> 
+       <h2>Software Design</h2>
+        <h3>Retrieving Key Data</h3>
+        <p>
+          This keyboard is based on PISO shift registers. So first we need to put our shift registers in parallel load mode and then serially shift
+          in that data for proccessing. Given the speed of the 32u4 chip we are using, and clock speed of 16mhz, we do
+          not have to worry about waiting for the shift registers to load in the data. The maximum transition period for the shift register is 45 ns, and
+          the best case senerio for the 32u4 is 62.5 ns per operation. Each of the three registers have their control lines tied together so that they can
+          be controlled in lock step by only manipulating a single line. If change is detected, the appripriate key is added to the HID report and the LED
+          animation is triggered. If, however, the key is a layer shift key, nothing is sent to the host and instead the internal key mapping is adjusted 
+          appropriately. Also, the LED background color is changed so that the user knows that a layer change has happened.
+        </p>
+        <h3>LED Timing</h3>
+        <p>
+          The 32u4 is just barely fast enough to keep up with the timing requirments of the LEDs used in this project. The datasheet states the timing
+          for a 0 code is 300ns high, 900ns low, with an allowance of (+-) 80ns. With a single operation taking 62.5 ns, the processor only has time to excecute
+          4.8 instructions between setting the LED pin high, and pulling it low. This of course eleminates the possibility of using timers.
+        <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="snippit">
+        <img src="assets/all_zeros_code_clipped.png" alt="all zeros code" class="snippit">
+        <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="snippit">
+        <img src="assets/all_ones_problem_code_clipped.png" alt="all ones problem code" class="snippit">
+        <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="snippit">
+        <img src="assets/all_ones_solution_code_clipped.png" alt="all ones solution code" class="snippit">
+        </p>
+
+
       <h2>Electronic Design</h2>
       <h3>Constraints and Desires</h3>
       <p>
@@ -83,30 +107,7 @@
         <img src="assets/layer_two_s3.jpg" alt="step three in assembly process" class="images">
         <img src="assets/layer_two_s4.jpg" alt="step four in assembly process" class="images">
         <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images">
-      <h2>Software Design</h2>
-        <h3>Retrieving Key Data</h3>
-        <p>
-          This keyboard is based on PISO shift registers. So first we need to put our shift registers in parallel load mode and then serially shift
-          in that data for proccessing. Given the speed of the 32u4 chip we are using, and clock speed of 16mhz, we do
-          not have to worry about waiting for the shift registers to load in the data. The maximum transition period for the shift register is 45 ns, and
-          the best case senerio for the 32u4 is 62.5 ns per operation. Each of the three registers have their control lines tied together so that they can
-          be controlled in lock step by only manipulating a single line. If change is detected, the appripriate key is added to the HID report and the LED
-          animation is triggered. If, however, the key is a layer shift key, nothing is sent to the host and instead the internal key mapping is adjusted 
-          appropriately. Also, the LED background color is changed so that the user knows that a layer change has happened.
-        </p>
-        <h3>LED Timing</h3>
-        <p>
-          The 32u4 is just barely fast enough to keep up with the timing requirments of the LEDs used in this project. The datasheet states the timing
-          for a 0 code is 300ns high, 900ns low, with an allowance of (+-) 80ns. With a single operation taking 62.5 ns, the processor only has time to excecute
-          4.8 instructions between setting the LED pin high, and pulling it low. This of course eleminates the possibility of using timers.
-        <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="snippit">
-        <img src="assets/all_zeros_code_clipped.png" alt="all zeros code" class="snippit">
-        <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="snippit">
-        <img src="assets/all_ones_problem_code_clipped.png" alt="all ones problem code" class="snippit">
-        <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="snippit">
-        <img src="assets/all_ones_solution_code_clipped.png" alt="all ones solution code" class="snippit">
-        </p>
-      <h2>Retrospective</h2>
+           <h2>Retrospective</h2>
       <p>If I were to do this project again, there are a few major changes I would make. I would still use surface mount components because working with
        them was a goal of this project. However, I would NOT have used such small ones. I suppose using these tiny components helped me learn a lot, however
       they were a pain in the butt. Here is a picture of one of the resistors next to some Mortons table salt.</p>
