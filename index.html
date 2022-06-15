@@ -28,47 +28,78 @@
         with the arrow keys on the second layer.
       </p> 
        <h2>Software Design</h2>
-        <h3>Retrieving Key Data</h3>
-        <p>
-          This keyboard is based on PISO shift registers. So first we need to put our shift registers in parallel load mode and then serially shift
-          in that data for proccessing. Given the speed of the 32u4 chip we are using, and clock speed of 16mhz, we do
-          not have to worry about waiting for the shift registers to load in the data. The maximum transition period for the shift register is 45 ns, and
-          the best case senerio for the 32u4 is 62.5 ns per operation. Each of the three registers have their control lines tied together so that they can
-          be controlled in lock step by only manipulating a single line. If change is detected, the appripriate key is added to the HID report and the LED
+          <h4>Core USB Functionality</h4>
+          <p>
+          When I originally started researching this project I came across similar work done by <a href = "https://github.com/kmani314/ATMega32u4-HID-Keyboard"> Krishna Mani</a>
+          which implemented the core USB functionality I needed for
+          the 32u4 board. Their repository goes into some detail on how the USB section works, and also links to other extrememly helpful sources, so I wont repeat
+          that information here. However, I will clarify one thing that caused me confusion. The CPU in the 32u4 is connected to the USB device via
+          dual port FIFO RAM. This is why you'll see the same memory location -- i.e. UEDATX -- being written to consecutivly, seemingly clobbering the previosly
+          written data.
+          </p>
+
+          <h4>Reading Key Data</h4>
+          <p>
+          This keyboard is based on PISO shift registers rather than a scanning matrix. Given the relatively slow clock of the CPU, we do
+          not have to worry about timing in regards to the register's functions.The maximum transition period for the shift register is 45 ns, and
+          the best case senerio for the 32u4 is 62.5 ns per operation. So,  there is no worry of data loss between switching the registers from input to output.
+          </p>
+
+          <p>
+          Each of the three registers have their control lines tied together so that they can
+          be controlled in lock step by a single GPIO pin. The registers read in the current state of the keyboard and then that data is shifted into the CPU.
+          The current state and previous states are compared and, in most cases, if change is detected, the appripriate key is added to the HID report and the LED
           animation is triggered. If, however, the key is a layer shift key, nothing is sent to the host and instead the internal key mapping is adjusted 
-          appropriately. Also, the LED background color is changed so that the user knows that a layer change has happened.
-        </p>
-        <h3>LED Timing</h3>
+          appropriately and the LED base color is changed so that the user knows that a layer change has occured.
+          </p>
+        <h4>LED Timing</h4>
         <p>
-          The 32u4 is just barely fast enough to keep up with the timing requirments of the LEDs used in this project. The datasheet states the timing
-          for a 0 code is 300ns high, 900ns low, with an allowance of (+-) 80ns. With a single operation taking 62.5 ns, the processor only has time to excecute
-          4.8 instructions between setting the LED pin high, and pulling it low. Using a Saleae logic analyzer proved invaluable when writing this code and debugging.
+          The 32u4 is just barely fast enough to keep up with the timing requirments of the LEDs used in this project. 
+          The LED <a href = "https://media.digikey.com/pdf/Data%20Sheets/Lite-On%20PDFs/LTST-E263CEGBK_RevC_7-6-19.pdf">datasheet</a> states the required
+          intervals are 300ns and 900ns, with an allowance of (+-) 80ns. With a single cycle of the 32u4 taking 62.5 ns, the processor only has time to excecute
+          4.8 instructions during the shorter of the two intervals.
+          Using a logic analyzer proved invaluable when writing and debugging this code, because it meant I did not have to inspect the generated assembly and 
+          calculate the timing by hand. Also, given that every part of this project was unproven debugging was even more difficult than usual due to the potential
+          for both hardware and software bugs to occur at the same time.
+          <br>
           The follow section shows simplified examples of the problem faced and measurements of the timing.
         </p>
-        <p>
-          In this first example, we can see that we are able to send a train of zeros without any issue.
-        </p>
+        <h2>
+          In this first example, we start off simple and try to send 10 zeros.
+        </h2>
         <img src="assets/all_zeros_code_clipped2.png" alt="all zeros code" class="images snippit">
+        <h2>
+          This works perfectly fine and we see that the resulting output is within the timing requirments.
+        </h2>
         <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="images analyzer">
-        <p>
-          However, as we can see in this example, we are unable to send a train of ones using a standard issue for loop. This is because the for loop stacks all
-          of its overhead at the end of the loop. The conditional is checked, 'i' is incremented, and we jump back to the beginning of the loop. The problem is that
-          this overhead takes longer than the 300ns that we have before having to set the line high.
-        </p>
+
+        <h2>
+          Next, we will try and send 10 ones.
+        </h2>
         <img src="assets/all_ones_problem_code_clipped2.png" alt="all ones problem code" class="images snippit">
+        <h2>
+          This does not work. Even with out any delay, the signal stays low for far too long.
+        </h2>
         <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="images analyzer">
-        <p>
-          Here we see a solution to the problem. I have changed where in the body the overhead occurs, allowing the program to execute fast enough
-          to satisfy the requirments of the LEDs. In the keyboard implementation this code has to have another conditional added in order to 
-          change when the overhead occurs, depending on whether it needs to send a 1 or a 0.
-        </p>
+        <h2>
+          Here we see a solution to the problem. Each time a for-loop executes, the conditional has to be checked and the counter
+          has to be incremented. This extra overhead was taking longer than the 300ns we had to work with. The solution I came up
+          with was the adjust when this overhead occured.
+        </h2>
         <img src="assets/all_ones_solution_code_clipped2.png" alt="all ones solution code" class="images snippit">
+        <h2>
+          With the overhead moved into the middle of the loop, the timing is now compliant with the requirments.
+          In the full implementation, this code has to have another conditional added in order to 
+          adjust when the overhead occurs depending on what value needs to be sent.
+
+        </h2>
         <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="images analyzer">
 
 
 
       <h2>Electronic Design</h2>
       <h3>Constraints and Desires</h3>
+      <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
       <p>
         For this project, I only had a few key physical requirments in mind. The key layout
         needed to be orhtolinear, I wanted backlighting, and I wanted the smallest footprint 
@@ -84,9 +115,9 @@
         shot. While it did increase the assembly complexity, it went much smoother than I was expecting.
       </p>
 
-        <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
-        <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
-      <p>
+      <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
+
+             <p>
         Another oddity in the design is the implementation of an entire pre-assembled development board
         onto the PCB. The motivation behind this decision was wanting to minimize hardware debugging at 
         all costs. I don't have enough experince on the hardware side of things to be confident that novel 
