@@ -64,35 +64,35 @@
           <br>
           The follow section shows simplified examples of the problem faced and measurements of the timing.
         </p>
-        <h2>
+        <p>
           In this first example, we start off simple and try to send 10 zeros.
-        </h2>
+        </p>
         <img src="assets/all_zeros_code_clipped2.png" alt="all zeros code" class="images snippit">
-        <h2>
+        <p>
           This works perfectly fine and we see that the resulting output is within the timing requirments.
-        </h2>
+        </p>
         <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="images analyzer">
 
-        <h2>
+        <p>
           Next, we will try and send 10 ones.
-        </h2>
+        </p>
         <img src="assets/all_ones_problem_code_clipped2.png" alt="all ones problem code" class="images snippit">
-        <h2>
+        <p>
           This does not work. Even with out any delay, the signal stays low for far too long.
-        </h2>
+        </p>
         <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="images analyzer">
-        <h2>
+        <p>
           Here we see a solution to the problem. Each time a for-loop executes, the conditional has to be checked and the counter
           has to be incremented. This extra overhead was taking longer than the 300ns we had to work with. The solution I came up
           with was the adjust when this overhead occured.
-        </h2>
+        </p>
         <img src="assets/all_ones_solution_code_clipped2.png" alt="all ones solution code" class="images snippit">
-        <h2>
+        <p>
           With the overhead moved into the middle of the loop, the timing is now compliant with the requirments.
           In the full implementation, this code has to have another conditional added in order to 
           adjust when the overhead occurs depending on what value needs to be sent.
 
-        </h2>
+        </p>
         <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="images analyzer">
 
 
@@ -101,76 +101,88 @@
       <h3>Constraints and Desires</h3>
       <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
       <p>
-        For this project, I only had a few key physical requirments in mind. The key layout
-        needed to be orhtolinear, I wanted backlighting, and I wanted the smallest footprint 
-        I could manage. The first two requirments were relatively straight forwared, in regards
-        to the design process. However, reducing the footprint proved to be a challenge. Since I
+        For this project, I only had a few key requirments in mind. The key layout
+        needed to be orhtolinear, I wanted RGB backlighting, and I wanted the smallest footprint 
+        I could manage. In regards to the design process, the first two requirments were relatively straight forwared.
+        However, reducing the footprint proved to be a challenge. 
+        <br>
+        Since I
         wanted to have backlit keys, and a good clicky feel, I found myself needing to use through-hole
-        keys. Which was great, except it removed the possibility of adding larger components to 
+        switches. Which was all fine and dandy, except it removed the possibility of connecting larger components to 
         the back of the board. I could have made the board taller, or wider, but this would have 
-        violated one of my primary design requirments. So, I desided to do something I had never seen
-        before and implemented what I called the bi-plane design. I could have used a ribbon cable to
-        connect to two boards, but again this added more width and height. I was unsure if the bi-plane 
-        would introduce any significant electrical issue, or assembly issues, but decided to give it a
-        shot. While it did increase the assembly complexity, it went much smoother than I was expecting.
+        violated one of my primary design requirments. So, I decided to do something new and implement
+        what I call the bi-plane design. Two PCB's stacked on top of each other with connections at the origin of
+        each signal. I could have used a ribbon cable to
+        connect the two boards, but again this added more width and height. Further, the bi-plane design provided 
+        structrual stability to the second board removing the need for additional mounting points.
       </p>
 
-      <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
+        <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
 
              <p>
-        Another oddity in the design is the implementation of an entire pre-assembled development board
-        onto the PCB. The motivation behind this decision was wanting to minimize hardware debugging at 
+        Another oddity in this design is the integration of an entire pre-assembled development board
+        onto the PCB. The motivation behind this decision was the desire to minimize hardware debugging at 
         all costs. I don't have enough experince on the hardware side of things to be confident that novel 
-        power circuitry or timing circuity, of my design, would have worked first try. Giving up 2mm to the 
-        thickness of the development board's pcb, to save potentially months of time, seemed like the obvious choice. 
+        power/timing circuity of my design, would have worked on the first try. Adding 3mm to the 
+        overall thickness in order to save potentially months of time, seemed like the obvious choice. 
       </p>
         <p>
-          In order to make a good connection between the GPIO of the development board and the PCB pads, 
-          pins were used. These pins served two purposes. Firstly, they allowed solder to get all the way
-          down into the GPIO pins and create a solid connection with the PCB traces. Secondly they 
-          facilitated future access to the MCU for debugging and updates.
+          Although this idea worked really well in the end, it took a bit of experiementing to get a good connections on all
+          of the pads. Strong surface tension kept my from applying solder through the header holes, and a slight curve in the board
+          kept me from first applying solder balls to the pads and then attaching the board. What worked in the end was using anchoring pins to
+          facilitate the connection between the pads and the development board.
         </p>
+
+        <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images hard">
         <h3>Assembly Proccess</h3>
         <p>
-          Integrating the development board was relatively easy. A small blob of solder was added to the end of each pin before being placed
-          through the GPIO and held in contact with the PCB traces. Then the pin was heated and more solder was added, ensuring a secure connection
-          to both boards. Attempts to solder without the pins were unsuccesful. The surface tension was too high and the top of the GPIO holes
-          were just covered with cap of solder, with none reaching the PCB traces. Regardless, we needed access to the ISP pins anyways, so
-          adding this pins to all of the connection points and trimming the ones that we didn't need access to was not very much extra work.
+          A small blob of solder was added to the end of each pin before being placed
+          through the header holes. Then the pin was heated and more solder was added, ensuring a secure connection
+          to both boards.
         </p>
-        <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images hard">
-        <img src="assets/pin_hooks.jpg" alt="hooks for programming" class="images hard">
-        <img src="assets/programming_assembled.jpg" alt="accessing hooks after assembly" class="images hard">
-
         <p>
-          The assembly proccess for most of the components was relatively straight forward in regards to the top board. The most novel aspects
-          of the assembly proccess were in regards to the bi-plane design and the integration of the development board. First, long strands of
-          wire were soldered to the top board like hair follicles. Then these long wires were threaded into the bottom board one row at a time. 
-          The board is the slowly lowered, while making sure everything is kept straight.
+          This experimentation also lead to a perfect solution to a previouslt unaddressed problem. Due to the development board being
+          sandwiched between the two PCBs, I did not have any access to the pins after assembly for further dubugging and software modifications.
+          However, bending the anchoring pins over and wrapping them in a little heat shrink created perfect programming hooks.
         </p>
-        <img src="assets/layer_two_s1.jpg" alt="step one in assembly process" class="images hard">
+
+        <img src="assets/pin_hooks.jpg" alt="hooks for programming" class="images hard">
+
+        <img src="assets/programming_assembled.jpg" alt="accessing hooks after assembly" class="images hard">
+        <h3>The Hair Follicle Technique</h3>
+        <p>
+          The assembly proccess for most of the other components was relatively common, except for the implementation of 
+          the previously mentioned bi-plane design. Although not complicated, the Hair Follical Technique was an interesting procedure.
+          First, long strands of wire were soldered to the top board.         
+        </p>
         <img src="assets/spaghetti_tech.jpg" alt="spaghetti tech" class="images hard">
+        <p>
+          Then, these long wires were threaded into the bottom board one row at a time. 
+        </p>
         <img src="assets/layer_two_s2.jpg" alt="step two in assembly process" class="images hard">
+        <p>
+          The board was slowly tilted and lowered, while more wires were threaded.
+        </p>
         <img src="assets/layer_two_s3.jpg" alt="step three in assembly process" class="images hard">
         <img src="assets/layer_two_s4.jpg" alt="step four in assembly process" class="images hard">
         <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images hard">
            <h2>Retrospective</h2>
-      <p>If I were to do this project again, there are a few major changes I would make. I would still use surface mount components because working with
-       them was a goal of this project. However, I would NOT have used such small ones. I suppose using these tiny components helped me learn a lot, however
-      they were a pain in the butt. Here is a picture of one of the resistors next to some Mortons table salt.</p>
+      <p>
+        If I were to do this project again, there are a few major changes I would make
+      </p>
+      <p>
+      Firstly, I would not use 0402 components. They are just too small to handle and I had plenty of room to use a larger package. Here is a picture of the resistors
+      next to some Morton salt crystals.
+      </p>
         <img src="assets/resistor_salt.jpg" alt="Image of resistor on rice" class="images hard">
         <p>
-          I also had to use a usb microscope in order to visually inspect connections.
+          In order to work with these components I needed to use a USB microscope in order to place them.
         </p>
         <img src="assets/initial_setup.jpg" alt="initial setup" class="images hard">
         <p>
-          Another major change I would have made is in regard to the IO pins used to read the shift register values. Instead of using IO pins that are physically
-          next to each other on the development board, I would have used IO pins that were adjacent in a single port. This would have allowed me to use a bit mask
-          to read all of the pin values at once instead of reading each individually and then packing them into and array.
-        </p>
-        <p>
-          Finally, I would have moved the development board onto the other side of board 2. This would have allowed for easier access to the pins in case of 
-          repairs, debugging, and updates. 
+          Secondly, I would change which GPIO pins the shift registers are connected to. Instead of using IO pins that are physically
+          next to each other, I would have used GPIO pins that are connected sequentially in memory. This would have allowed me to use a bit mask
+          to read all of the pin values at once instead of reading each individually.
         </p>
   </body>
 </html>
