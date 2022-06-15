@@ -1,11 +1,37 @@
 .images{
+	padding: 40px;
+}
+
+.images.hard{
 	width: 800px;	
 }
 
-.snippit{
-	width 1200px;
+.images.snippit{
+	width: 800px;
+}
+
+.images.analyzer{
+	width: 1200px;
+}
+
+.images.pcb{
+	width: 1200px;
+}
+
+.gif{
+	width: 40%;
 }
 
 h1 {
-	text-align: center;
+}
+
+p {
+	width: 800px;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
 }

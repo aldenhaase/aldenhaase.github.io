@@ -10,6 +10,7 @@
   </head>
   <body>
       <h1>Building A Keyboard From The Ground Up</h1>
+      <img src="assets/keyboard_gif.gif" alt="gif of keyboard spinning" class="gif" >
       <p>
         I for one, have faith in my thumbs; more faith than modern keyboard designs do, it seems. 
         While I was typing away one day, I looked down at my fingers hammering away, each one with
@@ -41,14 +42,29 @@
         <p>
           The 32u4 is just barely fast enough to keep up with the timing requirments of the LEDs used in this project. The datasheet states the timing
           for a 0 code is 300ns high, 900ns low, with an allowance of (+-) 80ns. With a single operation taking 62.5 ns, the processor only has time to excecute
-          4.8 instructions between setting the LED pin high, and pulling it low. This of course eleminates the possibility of using timers.
-        <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="snippit">
-        <img src="assets/all_zeros_code_clipped.png" alt="all zeros code" class="snippit">
-        <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="snippit">
-        <img src="assets/all_ones_problem_code_clipped.png" alt="all ones problem code" class="snippit">
-        <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="snippit">
-        <img src="assets/all_ones_solution_code_clipped.png" alt="all ones solution code" class="snippit">
+          4.8 instructions between setting the LED pin high, and pulling it low. Using a Saleae logic analyzer proved invaluable when writing this code and debugging.
+          The follow section shows simplified examples of the problem faced and measurements of the timing.
         </p>
+        <p>
+          In this first example, we can see that we are able to send a train of zeros without any issue.
+        </p>
+        <img src="assets/all_zeros_code_clipped2.png" alt="all zeros code" class="images snippit">
+        <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="images analyzer">
+        <p>
+          However, as we can see in this example, we are unable to send a train of ones using a standard issue for loop. This is because the for loop stacks all
+          of its overhead at the end of the loop. The conditional is checked, 'i' is incremented, and we jump back to the beginning of the loop. The problem is that
+          this overhead takes longer than the 300ns that we have before having to set the line high.
+        </p>
+        <img src="assets/all_ones_problem_code_clipped2.png" alt="all ones problem code" class="images snippit">
+        <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="images analyzer">
+        <p>
+          Here we see a solution to the problem. I have changed where in the body the overhead occurs, allowing the program to execute fast enough
+          to satisfy the requirments of the LEDs. In the keyboard implementation this code has to have another conditional added in order to 
+          change when the overhead occurs, depending on whether it needs to send a 1 or a 0.
+        </p>
+        <img src="assets/all_ones_solution_code_clipped2.png" alt="all ones solution code" class="images snippit">
+        <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="images analyzer">
+
 
 
       <h2>Electronic Design</h2>
@@ -68,8 +84,8 @@
         shot. While it did increase the assembly complexity, it went much smoother than I was expecting.
       </p>
 
-        <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images">
-        <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images">
+        <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
+        <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
       <p>
         Another oddity in the design is the implementation of an entire pre-assembled development board
         onto the PCB. The motivation behind this decision was wanting to minimize hardware debugging at 
@@ -91,9 +107,9 @@
           were just covered with cap of solder, with none reaching the PCB traces. Regardless, we needed access to the ISP pins anyways, so
           adding this pins to all of the connection points and trimming the ones that we didn't need access to was not very much extra work.
         </p>
-        <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images">
-        <img src="assets/pin_hooks.jpg" alt="hooks for programming" class="images">
-        <img src="assets/programming_assembled.jpg" alt="accessing hooks after assembly" class="images">
+        <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images hard">
+        <img src="assets/pin_hooks.jpg" alt="hooks for programming" class="images hard">
+        <img src="assets/programming_assembled.jpg" alt="accessing hooks after assembly" class="images hard">
 
         <p>
           The assembly proccess for most of the components was relatively straight forward in regards to the top board. The most novel aspects
@@ -101,21 +117,21 @@
           wire were soldered to the top board like hair follicles. Then these long wires were threaded into the bottom board one row at a time. 
           The board is the slowly lowered, while making sure everything is kept straight.
         </p>
-        <img src="assets/layer_two_s1.jpg" alt="step one in assembly process" class="images">
-        <img src="assets/spaghetti_tech.jpg" alt="spaghetti tech" class="images">
-        <img src="assets/layer_two_s2.jpg" alt="step two in assembly process" class="images">
-        <img src="assets/layer_two_s3.jpg" alt="step three in assembly process" class="images">
-        <img src="assets/layer_two_s4.jpg" alt="step four in assembly process" class="images">
-        <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images">
+        <img src="assets/layer_two_s1.jpg" alt="step one in assembly process" class="images hard">
+        <img src="assets/spaghetti_tech.jpg" alt="spaghetti tech" class="images hard">
+        <img src="assets/layer_two_s2.jpg" alt="step two in assembly process" class="images hard">
+        <img src="assets/layer_two_s3.jpg" alt="step three in assembly process" class="images hard">
+        <img src="assets/layer_two_s4.jpg" alt="step four in assembly process" class="images hard">
+        <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images hard">
            <h2>Retrospective</h2>
       <p>If I were to do this project again, there are a few major changes I would make. I would still use surface mount components because working with
        them was a goal of this project. However, I would NOT have used such small ones. I suppose using these tiny components helped me learn a lot, however
       they were a pain in the butt. Here is a picture of one of the resistors next to some Mortons table salt.</p>
-        <img src="assets/resistor_salt.jpg" alt="Image of resistor on rice" class="images">
+        <img src="assets/resistor_salt.jpg" alt="Image of resistor on rice" class="images hard">
         <p>
           I also had to use a usb microscope in order to visually inspect connections.
         </p>
-        <img src="assets/initial_setup.jpg" alt="initial setup" class="images">
+        <img src="assets/initial_setup.jpg" alt="initial setup" class="images hard">
         <p>
           Another major change I would have made is in regard to the IO pins used to read the shift register values. Instead of using IO pins that are physically
           next to each other on the development board, I would have used IO pins that were adjacent in a single port. This would have allowed me to use a bit mask
