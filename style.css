@@ -1,19 +1,36 @@
+
 .images{
 	padding-top: 2vh;
-	max-width: 800px;
-	width: 30vw;
-	min-width: 300px;
 
 }
 
 .images.hard{
+	max-width: 800px;
+	width: 35vw;
+	min-width: 300px;
+
 }
 
 .images.snippit{
+	max-width: 800px;
+	width: 25vw;
+	min-width: 300px;
+
 }
 
 .images.analyzer{
+	max-width: 800px;
+	width: 40vw;
+	min-width: 300px;
+
 }
+.images.pcb{
+	max-width: 800px;
+	width: 40vw;
+	min-width: 300px;
+
+}
+
 
 
 .click-zoom input[type=checkbox] {
@@ -36,8 +53,6 @@
 }
 
 
-.images.pcb{
-}
 
 .gif{
 	max-width: 1400px;
@@ -49,7 +64,10 @@ h1 {
 }
 
 p {
-	width: 80vw;
+	max-width: 800px;
+	width: 40vw;
+	min-width: 300px;
+
 }
 
 body {

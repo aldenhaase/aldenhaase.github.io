@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-      <h1>Building A Keyboard From The Ground Up</h1>
+     <h1>Building A Keyboard From The Ground Up</h1>
       <img src="assets/keyboard_gif.gif" alt="gif of keyboard spinning" class="gif" >
       <p>
         I for one, have faith in my thumbs; more faith than modern keyboard designs do. 
@@ -134,8 +134,9 @@
 
 
       <h2>Electronic Design</h2>
-      <h3>Constraints and Desires</h3>
       <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
+
+      <h3>Constraints and Desires</h3>
       <p>
         For this project, I only had a few key requirments in mind. The key layout
         needed to be orhtolinear, I wanted RGB backlighting, and I wanted the smallest footprint 
@@ -162,13 +163,7 @@
         power/timing circuity of my design, would have worked on the first try. Adding 3mm to the 
         overall thickness in order to save potentially months of time, seemed like the obvious choice. 
       </p>
-        <p>
-          Although this idea worked really well in the end, it took a bit of experiementing to get a good connections on all
-          of the pads. Strong surface tension kept my from applying solder through the header holes, and a slight curve in the board
-          kept me from first applying solder balls to the pads and then attaching the board. What worked in the end was using anchoring pins to
-          facilitate the connection between the pads and the development board.
-        </p>
-
+      
         <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images hard">
         <h3>Assembly Proccess</h3>
         <p>
@@ -191,6 +186,13 @@
         <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images hard">
 
         <h3>Flatmount</h3>
+        <p>
+          Although the flatmounted development board idea worked really well in the end, it took a bit of experiementing to get a good connections on all
+          of the pads. Strong surface tension kept me from applying solder through the header holes, and a slight curve in the board
+          kept me from first applying solder balls to the pads and then attaching the board. What worked in the end was using anchoring pins to
+          facilitate the connection between the pads and the development board.
+        </p>
+
          <p>
           A small blob of solder was added to the end of each pin before being placed
           through the header holes. Then the pin was heated and more solder was added, ensuring a secure connection
@@ -214,16 +216,18 @@
       Firstly, I would not use 0402 components. They are just too small to handle and I had plenty of room to use a larger package. Here is a picture of the resistors
       next to some Morton salt crystals.
       </p>
-        <img src="assets/resistor_salt.jpg" alt="Image of resistor on rice" class="images hard">
+        <img src="assets/resistor_salt.jpg" alt="Image of resistor on salt" class="images hard">
         <p>
           In order to work with these components I needed to use a USB microscope in order to place them.
         </p>
         <img src="assets/initial_setup.jpg" alt="initial setup" class="images hard">
         <p>
-          Secondly, I would change which GPIO pins the shift registers are connected to. Instead of using IO pins that are physically
-          next to each other, I would have used GPIO pins that are connected sequentially in memory. This would have allowed me to use a bit mask
-          to read all of the pin values at once instead of reading each individually.
+          Secondly, I would change which GPIO pins the shift registers are connected to. It is important to note that consecutive GPIO pins are not neccisarily connected
+          to consecutive memory location. Because of this, when data is read from the shift registers it
+          takes three operations. A bit mask is used to check each bit independently. A much more elegant solution would be to use GPIO pins which are connected to 
+          consecutive memory so that a single bit mask could be used to read all three shift registers at once.
         </p>
+        <h1> -Alden </h1>
         <img src="assets/led_gif.gif" alt="displaying led" class="gif">
   </body>
 </html>
