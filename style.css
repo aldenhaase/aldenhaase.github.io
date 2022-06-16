@@ -1,21 +1,18 @@
 .images{
 	padding-top: 2vh;
-}
-
-.images.hard{
-	width: 30vw;
-}
-
-.images.snippit{
 	max-width: 800px;
 	width: 30vw;
 	min-width: 300px;
+
+}
+
+.images.hard{
+}
+
+.images.snippit{
 }
 
 .images.analyzer{
-	max-width:800px;
-	width: 40vw;
-	min-width: 375px;
 }
 
 
@@ -40,7 +37,6 @@
 
 
 .images.pcb{
-	width: 30vw;
 }
 
 .gif{
