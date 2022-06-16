@@ -24,7 +24,7 @@
 }
 
 
-@media only screen and (min-width: 600){
+@media only screen and (min-width: 600px){
 
 .click-zoom img {
   margin: 100px;
@@ -33,7 +33,7 @@
 }
 
 .click-zoom input[type=checkbox]:checked~img {
-  transform: scale(2);
+  transform: scale(2.3);
   cursor: zoom-out
 }
 }
