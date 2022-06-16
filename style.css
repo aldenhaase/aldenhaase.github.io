@@ -1,5 +1,5 @@
 .images{
-	padding: 2vh;
+	padding-top: 2vh;
 }
 
 .images.hard{
@@ -15,14 +15,16 @@
 .images.analyzer{
 	max-width:800px;
 	width: 40vw;
-	min-width: 400px;
+	min-width: 375px;
 }
-
 
 
 .click-zoom input[type=checkbox] {
   display: none
 }
+
+
+@media only screen and (min-width: 600){
 
 .click-zoom img {
   margin: 100px;
@@ -34,7 +36,7 @@
   transform: scale(2);
   cursor: zoom-out
 }
-
+}
 
 
 .images.pcb{
