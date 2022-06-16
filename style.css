@@ -1,32 +1,57 @@
 .images{
-	padding: 40px;
+	padding: 2vh;
 }
 
 .images.hard{
-	width: 800px;	
+	width: 30vw;
 }
 
 .images.snippit{
-	width: 800px;
+	max-width: 800px;
+	width: 30vw;
+	min-width: 300px;
 }
 
 .images.analyzer{
-	width: 1200px;
+	max-width:800px;
+	width: 40vw;
+	min-width: 400px;
 }
 
+
+
+.click-zoom input[type=checkbox] {
+  display: none
+}
+
+.click-zoom img {
+  margin: 100px;
+  transition: transform 0.25s ease;
+  cursor: zoom-in
+}
+
+.click-zoom input[type=checkbox]:checked~img {
+  transform: scale(2);
+  cursor: zoom-out
+}
+
+
+
 .images.pcb{
-	width: 800px;
+	width: 30vw;
 }
 
 .gif{
-	width: 40%;
+	max-width: 1400px;
+	min-width: 300px;
+	width: 45vw;
 }
 
 h1 {
 }
 
 p {
-	width: 800px;
+	width: 80vw;
 }
 
 body {

@@ -12,7 +12,7 @@
       <h1>Building A Keyboard From The Ground Up</h1>
       <img src="assets/keyboard_gif.gif" alt="gif of keyboard spinning" class="gif" >
       <p>
-        I for one, have faith in my thumbs; more faith than modern keyboard designs do, it seems. 
+        I for one, have faith in my thumbs; more faith than modern keyboard designs do. 
         While I was typing away one day, I looked down at my fingers hammering away, each one with
         a job, each one contributing to the task at hand. Sure some fingers had more important rolls
         than others, but everyone was getting involved. Except for my right thumb. My right thumb just
@@ -67,33 +67,69 @@
         <p>
           In this first example, we start off simple and try to send 10 zeros.
         </p>
+        <div class="click-zoom">
+        <label>
+        <input type="checkbox">
         <img src="assets/all_zeros_code_clipped2.png" alt="all zeros code" class="images snippit">
+        </label>
+        </div>
+
         <p>
           This works perfectly fine and we see that the resulting output is within the timing requirments.
         </p>
+       <div class="click-zoom">
+        <label>
+        <input type="checkbox">
         <img src="assets/all_zeros_analyzer_clipped.png" alt="all zeros analyzer" class="images analyzer">
+        </label>
+        </div>
+
 
         <p>
           Next, we will try and send 10 ones.
         </p>
+        <div class="click-zoom">
+        <label>
+        <input type="checkbox">
         <img src="assets/all_ones_problem_code_clipped2.png" alt="all ones problem code" class="images snippit">
+        </label>
+        </div>
+
         <p>
           This does not work. Even with out any delay, the signal stays low for far too long.
         </p>
+         <div class="click-zoom">
+        <label>
+        <input type="checkbox">
         <img src="assets/all_ones_problem_analyzer_clipped.png" alt="all ones problem analyzer" class="images analyzer">
+        </label>
+        </div>
+
         <p>
           Here we see a solution to the problem. Each time a for-loop executes, the conditional has to be checked and the counter
           has to be incremented. This extra overhead was taking longer than the 300ns we had to work with. The solution I came up
           with was the adjust when this overhead occured.
         </p>
+       <div class="click-zoom">
+        <label>
+        <input type="checkbox">
         <img src="assets/all_ones_solution_code_clipped2.png" alt="all ones solution code" class="images snippit">
+        </label>
+        </div>
+
         <p>
           With the overhead moved into the middle of the loop, the timing is now compliant with the requirments.
           In the full implementation, this code has to have another conditional added in order to 
           adjust when the overhead occurs depending on what value needs to be sent.
 
         </p>
+       <div class="click-zoom">
+        <label>
+        <input type="checkbox">
         <img src="assets/all_ones_solution_analyzer_clipped.png" alt="all ones solution analyzer" class="images analyzer">
+        </label>
+        </div>
+
 
 
 
@@ -136,6 +172,26 @@
         <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images hard">
         <h3>Assembly Proccess</h3>
         <p>
+          The assembly proccess for most of the other components was relatively common, except for the implementation of 
+          the previously mentioned bi-plane design and the flatmounting of the development board.
+        </p>
+
+        <h3>The Hair Follicle Technique</h3>
+        <p>Although not complicated, the Hair Follical Technique was an interesting procedure.
+          First, long strands of wire were soldered to the top board.         
+        </p>
+        <img src="assets/spaghetti_tech.jpg" alt="spaghetti tech" class="images hard">
+        <p>
+          Then, these long wires were threaded into the bottom board one row at a time. 
+        </p>
+        <p>
+          The board was slowly tilted and lowered, while more wires were threaded.
+        </p>
+        <img src="assets/layer_two_s4.jpg" alt="step four in assembly process" class="images hard">
+        <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images hard">
+
+        <h3>Flatmount</h3>
+         <p>
           A small blob of solder was added to the end of each pin before being placed
           through the header holes. Then the pin was heated and more solder was added, ensuring a secure connection
           to both boards.
@@ -149,23 +205,7 @@
         <img src="assets/pin_hooks.jpg" alt="hooks for programming" class="images hard">
 
         <img src="assets/programming_assembled.jpg" alt="accessing hooks after assembly" class="images hard">
-        <h3>The Hair Follicle Technique</h3>
-        <p>
-          The assembly proccess for most of the other components was relatively common, except for the implementation of 
-          the previously mentioned bi-plane design. Although not complicated, the Hair Follical Technique was an interesting procedure.
-          First, long strands of wire were soldered to the top board.         
-        </p>
-        <img src="assets/spaghetti_tech.jpg" alt="spaghetti tech" class="images hard">
-        <p>
-          Then, these long wires were threaded into the bottom board one row at a time. 
-        </p>
-        <img src="assets/layer_two_s2.jpg" alt="step two in assembly process" class="images hard">
-        <p>
-          The board was slowly tilted and lowered, while more wires were threaded.
-        </p>
-        <img src="assets/layer_two_s3.jpg" alt="step three in assembly process" class="images hard">
-        <img src="assets/layer_two_s4.jpg" alt="step four in assembly process" class="images hard">
-        <img src="assets/layer_two_s5_alt.jpg" alt="step five in assembly process alt 2" class="images hard">
+
            <h2>Retrospective</h2>
       <p>
         If I were to do this project again, there are a few major changes I would make
