@@ -5,29 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Alden Docs</title>
+    <title>Keyboard</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon/favicon.ico" />
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>DRAFT</h1>
-     <h1>Building A Keyboard From The Ground Up</h1>
+    <h1>-DRAFT-</h1>
+     <h1>A Better Keyboard</h1>
       <img src="assets/keyboard_gif.gif" alt="gif of keyboard spinning" class="gif" >
       <p>
-        I for one, have faith in my thumbs; more faith than modern keyboard designs do. 
-        While I was typing away one day, I looked down at my fingers hammering away, each one with
-        a job, each one contributing to the task at hand. Sure some fingers had more important rolls
-        than others, but everyone was getting involved. Except for my right thumb. My right thumb just
-        sat there, poised over the keyboard ready to participate, but never called to action. 
-        I thought to myself -- "one extra wide key for two digits? It can't be optmimal. -- so I set 
-        out to see for myself. The only question was, what keys should fill the new spaces? As someone
-        who spends most of their time writing in languages that use the
-        "[]{}=+-_" set of keys all of the time, they seemed like the obvious choice. While I was at 
-        it, I had one more optimization I wanted to implement. I am a big fan of VIM. I am certainly
-        not an expert. However, the tricks that I have picked up, are hard to live without. I find 
-        myself typing "kkkkjjjlll" all of the time in text documents and emails. Since I was planning
-        on making a minimal footprint, multilayered keyboard, I decided to replace the "hjkl" keys 
-        with the arrow keys on the second layer.
+        Why is the space-bar so wide? My thumbs are just as capible as my fingers, they articulate just the same. Yet, 
+        the two of them have been assigned a singular purpose, to add space. <br> The goal of this project was to implement
+        all of the little things I wished were different about my keyboard. I wanted a keyboard which freed my thumbs from the monotony
+        and allowed them greater purpose beyond adding space. I wanted it to be orhtolinear to reduce strain. 
+        I wanted it to be layered to reduce the amount of finger movement. I wanted it to take up far less
+        space on my desk. I wanted RGB.
       </p> 
+
+      <h2>Electronic Design</h2>
+      <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
+      <p>
+        Since I
+        wanted to have backlit keys, and a good clicky feel, I found myself needing to use through-hole
+        switches.Which meant I couldn't mount any large components on the back side of the board.
+        I could have made room for these larger components by making the board taller, or wider, but this would have 
+        violated one of my primary design requirments. So, I decided to do something new and implement
+        what I call the bi-plane design. Two PCB's stacked on top of each other with connections at the origin of
+        each signal.
+      </p>
+
+        <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
+
+             <p>
+        Another oddity in this design is the integration of an entire pre-assembled development board
+        onto the PCB. The motivation behind this decision was the desire to minimize hardware debugging at 
+        all costs. I didn't have enough experince to be confident that novel 
+        power/timing circuity of my design, would work on the first try, and this didn't seem like the time to learn.
+         Besides, adding 3mm to the overall thickness in order to save potentially months of time, seemed like the obvious choice. 
+      </p>
        <h2>Software Design</h2>
           <h4>Core USB Functionality</h4>
           <p>
@@ -43,7 +58,7 @@
           <p>
           This keyboard is based on PISO shift registers rather than a scanning matrix. Given the relatively slow clock of the CPU, we do
           not have to worry about timing in regards to the register's functions.The maximum transition period for the shift register is 45 ns, and
-          the best case senerio for the 32u4 is 62.5 ns per operation. So,  there is no worry of data loss between switching the registers from input to output.
+          the best case senerio for the 32u4 is 62.5 ns per operation. So, there is no worry of data loss between switching the registers from input to output.
           </p>
 
           <p>
@@ -134,46 +149,18 @@
 
 
 
-      <h2>Electronic Design</h2>
-      <img src="assets/pcb_trace_bottom.jpg" alt="pcb traces bottom" class="images pcb">
-
-      <h3>Constraints and Desires</h3>
-      <p>
-        For this project, I only had a few key requirments in mind. The key layout
-        needed to be orhtolinear, I wanted RGB backlighting, and I wanted the smallest footprint 
-        I could manage. In regards to the design process, the first two requirments were relatively straight forwared.
-        However, reducing the footprint proved to be a challenge. 
-        <br>
-        Since I
-        wanted to have backlit keys, and a good clicky feel, I found myself needing to use through-hole
-        switches. Which was all fine and dandy, except it removed the possibility of connecting larger components to 
-        the back of the board. I could have made the board taller, or wider, but this would have 
-        violated one of my primary design requirments. So, I decided to do something new and implement
-        what I call the bi-plane design. Two PCB's stacked on top of each other with connections at the origin of
-        each signal. I could have used a ribbon cable to
-        connect the two boards, but again this added more width and height. Further, the bi-plane design provided 
-        structrual stability to the second board removing the need for additional mounting points.
-      </p>
-
-        <img src="assets/pcb_trace_top.jpg" alt="mcu mounting spikes" class="images pcb">
-
-             <p>
-        Another oddity in this design is the integration of an entire pre-assembled development board
-        onto the PCB. The motivation behind this decision was the desire to minimize hardware debugging at 
-        all costs. I don't have enough experince on the hardware side of things to be confident that novel 
-        power/timing circuity of my design, would have worked on the first try. Adding 3mm to the 
-        overall thickness in order to save potentially months of time, seemed like the obvious choice. 
-      </p>
+      
       
         <img src="assets/mcu_mounting_spikes.jpg" alt="pcb traces top" class="images hard">
         <h3>Assembly Proccess</h3>
         <p>
-          The assembly proccess for most of the other components was relatively common, except for the implementation of 
+          The assembly proccess for most of the components was relatively common, except for the implementation of 
           the previously mentioned bi-plane design and the flatmounting of the development board.
         </p>
 
         <h3>The Hair Follicle Technique</h3>
-        <p>Although not complicated, the Hair Follical Technique was an interesting procedure.
+        <p>Although not complicated, the Hair Follical Technique was an interesting procedure and the best way to implement
+          the bi-plane design.<br>
           First, long strands of wire were soldered to the top board.         
         </p>
         <img src="assets/spaghetti_tech.jpg" alt="spaghetti tech" class="images hard">
