@@ -21,18 +21,7 @@
 	height: 65vh;
 	border-style: solid;
 	overflow: hidden;
-}
-
-	.pLink{
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	background-color: #fcbf49;
-	font-size: 1.2em;
-	font-family: 'Kanit', sans-serif;
-	color: black;
-	width: 100%;
-	height: 40px;
+	grid-template-rows:repeat(11,1fr);
 }
 
 }
@@ -45,6 +34,7 @@
 	display:none;
 }
 	.hText{
+		grid-row: span 10;
 		display:inline-block;
 	}
 	.vText{
@@ -57,26 +47,66 @@
 	width: 600px;
 	border-style: solid;
 	overflow: hidden;
+	grid-template-columns: 10% 90%;
+	grid-template-rows: repeat(10, 1fr);
 }
 
 
+
+}
+
+.box{
+	display: grid;
+}
+
 .pLink{
-	position: absolute;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	background-color: #fcbf49;
 	font-size: 1.2em;
 	font-family: 'Kanit', sans-serif;
 	color: black;
-	margin-left: 60px;
-	top: 0px;
-	width: 540px;
-	height: 40px;
+	width: 100%;
 }
 
-
+.pLink.yellow{
+	background-color: #fcbf49;
+	font-size: 1.5em;
 }
+.pLink.disable.one{
+	background-color: #404040;
+}
+.pLink.disable.two{
+	background-color: #353535;
+}
+.pLink.disable.three{
+	background-color: #303030;
+}
+.pLink.disable.four{
+	background-color: #252525;
+}
+.pLink.disable.five{
+	background-color: #202020;
+}
+.pLink.disable.six{
+	background-color: #151515;
+}
+.pLink.disable.seven{
+	background-color: #101010;
+}
+.pLink.disable.eight{
+	background-color: #050505;
+}
+
+.pLink.disable.black{
+	background-color: black;
+}
+.pLink.disable a:hover{
+	all:unset;
+	cursor: wait;
+	font-family: 'Orbitron', sans-serif;
+}
+
 
 nav{
 	display: flex;
@@ -126,11 +156,11 @@ hr {
     }
 
 .hText{
- 	padding-left: 20px;
+	padding-left: 15px;
  	height: 100%;
- 	width: 40px;
  	background-color: #003049;
 	color: #d62828;
+	font-family: 'Orbitron', sans-serif;
 	font-size: 2em;
 }
 
@@ -147,22 +177,17 @@ hr {
 }
 
 
-.hText p{
-	margin:0;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-family: 'Orbitron', sans-serif;
-}
-
 
 .pLink a{
+
+	font-family: 'Orbitron', sans-serif;
 	color: inherit;
 	text-decoration: none;
 }
 
 .pLink a:hover{
 	color: white;
-	font-size: 1.3em;
+	font-size: 1.1em;
 	font-weight: bold;
 }
 
