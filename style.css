@@ -11,6 +11,9 @@
 		display:none;
 	}
 	.vText{
+		border: solid;
+		border-width: thick;
+		border-color: #003049;
 		display:inline-block;
 	}
 
@@ -19,8 +22,8 @@
 	margin-top: 10vh;
 	width: 90vw;
 	height: 65vh;
-	border-style: solid;
 	overflow: hidden;
+	grid-template-columns: 97%;
 	grid-template-rows:repeat(11,1fr);
 }
 
@@ -34,21 +37,28 @@
 	display:none;
 }
 	.hText{
-		grid-row: span 10;
-		display:inline-block;
+		line-height: 200%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+	.hText.proj{
+		grid-row: span 7;
+	}
+	.hText.info{
+		grid-row: span 2;
 	}
 	.vText{
 		display:none;
 	}
-	.box{
+	.box{	
 	position: relative;
 	margin-top: 10vh;
 	height: 600px;
 	width: 600px;
-	border-style: solid;
-	overflow: hidden;
 	grid-template-columns: 10% 90%;
-	grid-template-rows: repeat(10, 1fr);
+	grid-template-rows: repeat(7, 1fr) repeat(2, 1.5fr);
+	grid-gap: 5px;
 }
 
 
@@ -69,44 +79,86 @@
 	width: 100%;
 }
 
-.pLink.yellow{
+.pLink.keyboard{
+	border: solid;
+	border-style: outset;
 	background-color: #fcbf49;
 	font-size: 1.5em;
+	border-width: thick;
 }
-.pLink.disable.one{
-	background-color: #404040;
+.pLink.disabled.one{
+	border: solid;
+	border-style: outset;
+	background-color: #125359;
+	border-width: thick;
 }
-.pLink.disable.two{
-	background-color: #353535;
+.pLink.disabled.two{
+	border: solid;
+	border-style: outset;
+	background-color: #ef4423;
+	border-width: thick;
 }
-.pLink.disable.three{
-	background-color: #303030;
+.pLink.disabled.three{
+	border: solid;
+	border-style: outset;
+	background-color: #2a3492;
+	border-width: thick;
 }
-.pLink.disable.four{
-	background-color: #252525;
+.pLink.disabled.four{
+	border: solid;
+	border-style: outset;
+	background-color: #4faf44;
+	border-width: thick;
 }
-.pLink.disable.five{
-	background-color: #202020;
+.pLink.disabled.five{
+	border: solid;
+	border-style: outset;
+	background-color: #f6eb14;
+	border-width: thick;
 }
-.pLink.disable.six{
-	background-color: #151515;
+.pLink.disabled.six{
+	border: solid;
+	border-style: outset;
+	background-color: #e283c9;
+	border-width: thick;
 }
-.pLink.disable.seven{
-	background-color: #101010;
+.pLink.disabled.seven{
+	border: solid;
+	border-style: outset;
+	background-color: #065ae5;
+	border-width: thick;
 }
-.pLink.disable.eight{
-	background-color: #050505;
+.pLink.disabled.eight{
+	border: solid;
+	border-style: outset;
+	border-width: thick;
+	background-color: #008751;
 }
 
-.pLink.disable.black{
-	background-color: black;
+
+.pLink.about{
+	border: solid;
+	border-style: outset;
+	background-color: #c2c3c7;
+	border-width: thick;
 }
-.pLink.disable a:hover{
-	all:unset;
-	cursor: wait;
-	font-family: 'Orbitron', sans-serif;
+.pLink.about a:hover{
+	color: grey;
+}
+.pLink.contact{
+	border: solid;
+	border-style: outset;
+	background-color: #bf0d00;
+	border-width: thick;
+}
+.pLink.contact a:hover{
+	color: grey;
 }
 
+.pLink.disabled a:hover{
+	color: black;
+	cursor: default;
+}
 
 nav{
 	display: flex;
@@ -156,12 +208,12 @@ hr {
     }
 
 .hText{
-	padding-left: 15px;
+	padding-left: 20px;
  	height: 100%;
  	background-color: #003049;
 	color: #d62828;
 	font-family: 'Orbitron', sans-serif;
-	font-size: 2em;
+	font-size: 1em;
 }
 
 .vText{
