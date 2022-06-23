@@ -98,12 +98,13 @@
 	background-color: #050505;
 }
 
-.pLink.disable.black{
+.pLink.about{
 	background-color: black;
+	color: white;
 }
 .pLink.disable a:hover{
 	all:unset;
-	cursor: wait;
+	cursor: default;
 	font-family: 'Orbitron', sans-serif;
 }
 
@@ -186,8 +187,8 @@ hr {
 }
 
 .pLink a:hover{
-	color: white;
-	font-size: 1.1em;
+	color: grey;
+	font-size: 1em;
 	font-weight: bold;
 }
 
@@ -246,6 +247,11 @@ hr {
 
 .click-zoom input[type=checkbox] {
   display: none
+}
+
+.main{
+	margin-top: 10%;
+	font-family: 'Kdam Thmor Pro', sans-serif;
 }
 
 
