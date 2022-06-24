@@ -220,9 +220,14 @@ hr {
 
 .images.hard{
 	max-width: 800px;
-	width: 35vw;
-	min-width: 300px;
+	width: 60vw;
+	min-width: 200px;
 
+}
+
+.images.hard.split{
+
+	width: 30vw;
 }
 
 .images.snippit{
@@ -252,7 +257,7 @@ hr {
 }
 
 .main{
-	margin-top: 10%;
+	margin-top: 2%;
 	font-family: 'Kdam Thmor Pro', sans-serif;
 }
 
@@ -260,13 +265,12 @@ hr {
 @media only screen and (min-width: 600px){
 
 .click-zoom img {
-  margin: 100px;
   transition: transform 0.25s ease;
   cursor: zoom-in
 }
 
 .click-zoom input[type=checkbox]:checked~img {
-  transform: scale(2.3);
+  transform: scale(2.0);
   cursor: zoom-out
 }
 }
@@ -284,7 +288,7 @@ h1 {
 
 p {
 	max-width: 1200px;
-	width: 50vw;
+	width: 75vw;
 	min-width: 300px;
 
 }
