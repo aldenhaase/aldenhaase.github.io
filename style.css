@@ -283,7 +283,11 @@ hr {
 	width: 45vw;
 }
 
-h1 {
+.twoPic{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 5px;
 }
 
 p {
